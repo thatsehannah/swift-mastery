@@ -1,6 +1,4 @@
-# The Basics
-
-## Constants and Variables
+# Constants and Variables
 
 - Constants - can't be changed once it's set
 - Variables - can be set to a different value in the future
