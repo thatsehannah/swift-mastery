@@ -205,3 +205,22 @@
         let text: String! = "An implicitly unwrapped optional string."
         let newText: String = text
         ```
+
+## Error Handling
+
+- Functions can "throw" errors when an error occurs, and the function's caller "catches" and handles the error
+- **throws** keyword - indicates that a function can throw an error
+- Must use a \*_do-catch_ block when calling a function that throws an error & prepend the `try` keyword to the function
+  - The `do-catch` block creates a new scope for the function, so when errors occur, they will be propagated to the `catch` block
+- Example:
+
+  ```swift
+  func throwsErr() throws {}
+
+  do {
+    try throwsError()
+    // if no error is thrown, code continues executing
+  } catch {
+    // handles the error that was thrown
+  }
+  ```
