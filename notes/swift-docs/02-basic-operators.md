@@ -18,3 +18,46 @@
 - Syntax: `conditional ? result1 (if true) : result2 (if false)`
 - If the `conditional` is true, it evaluates `result1` and returns its value; otherwise `result2` is evaluated and returned
 - Shorthand for `if-else` checks
+
+## Range Operators
+
+- **Closed range operator** - `a...b`
+  - Defines a range that runs from `a` to `b` and includes both `a` and `b`
+  - Useful when iterating over a range where you want to use all of the values
+  - Example:
+    ```swift
+    for index in 1...6 {
+      print(index)
+    }
+    // prints out 1,2,3,4,5,6
+    ```
+- **Half-open range operator** - `a..<b`
+  - Defines a range that runs from `a` to `b` but _doesn't_ include `b`
+  - Useful when working with arrays where you're counting up from the 0th index to the final index (aka the length of the array minus 1)
+  - Example:
+    ```swift
+    for index in 1..<6 {
+      print(index)
+    }
+    // prints out 1,2,3,4,5
+    ```
+- **One-sided ranges** - `...a` or `a...`
+  - Allows you to omit the value from one side of the operator
+  - Useful in subscripts in arrays
+  - Can be used alternatively to closed range or half-open range
+  - Example:
+
+    ```swift
+    let names = ["Ronnie", "Bobbie", "Ricky", "Mike", "Ralph"]
+    for name in names[2...] {
+      print(name)
+    }
+    // prints out Ricky, Mike, Ralph
+
+    for name in names[..<2] {
+      print(name)
+    }
+    //prints Ronnie, Bobbie
+    ```
+
+  - Can't iterate over a one-side range that omits its first value but can iterate over one that omits the final value
