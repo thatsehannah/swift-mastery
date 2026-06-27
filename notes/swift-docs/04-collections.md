@@ -75,7 +75,7 @@
 
 - Stores distinct values of the same type in an unordered list
 - Useful when the order doesn't matter or when to ensure that an item only appears once
-- Sets contain hash-typed items
+- Sets contain items that are hash-typed
   - An item that is hash-typed is of a type that provides a way to compute a hash value, which is an `Int` value that's always the same for that item
     - If the hash value of `a` is equal to '123456' and `b` is equal to `a`, then `b`'s hash value is also '123456'
 - Type: `Set<Element>`
@@ -147,3 +147,55 @@
   setC.isDisjoint(with: setA) // true
   setB.isDisjoint(with: setA) // false
   ```
+
+## Dictionaries
+
+- Stores key-value pairs, where the keys are of the same type and the values are of the same type
+- Order doesn't matter
+- Each value is associated with a unique key
+- Type: `Dictionary<Key, Value>` where `Key` must be a hash-typed
+  - `[Key: Value]` - Shorthand syntax for the type of dictionary
+- `[:]` - Empty dictionary initializer syntax
+- Example:
+
+  ```swift
+  var namesOfIntegers: [Int: String] = [:]
+  ```
+
+  - Keys are of type `Int` and values are of type `String`
+
+- Initialize a dictionary with a **dictionary literal** where each key and its value are separated by a colon, and the key-value pairs are separated by commas, surrounded by brackets
+  - Don't have to write the type if initializing with a dictionary literal
+  - Example:
+    ```swift
+    var airports = ["ATL": "Hartsfield", "DUB": "Dublin"]
+    ```
+- `count` - property that counts the number of items in a dictionary
+- `isEmpty` - property that checks if `count` is equal to 0 (or if dictionary does or doesn't contain elements)
+- Use subscript syntax to add a new item to dictionary by using the new key as the subscript index
+  - Also use subscript syntax to retrieve or change the value of a particular key
+    - Returns an optional value or `nil` if it doesn't exist
+  - Example:
+    ```swift
+    var airports = ["ATL": "Hartsfield", "DUB": "Dublin"]
+    airports["LHR": "London"]
+    airports["ATL": "Hartsfield Jackson"]
+    ```
+- `updateValue(_:forKey:)` - method that updates or sets the value of a particular key
+  - Returns the optional of the old value after performing the update or `nil` if the value for that key doesn't exist
+- `removeValue(forKey:)` - method that removes a key-value pair
+  - Returns the removed value or `nil`
+- Iterate over dictionary using a `for-in` loop
+  - Each item is a tuple and is decomposed into temporary constants/variables
+  - Example:
+    ```swift
+    for (code, name) in airports {
+      print("\(code): \(name)")
+    }
+    ```
+  - Iterate over the keys using the `keys` property and values using the `values` property of the dictionary
+    - Use the array's explicit initializer to convert the `keys` and `values` properties into an array
+      - Example:
+        ```swift
+        let codes = [String](airports.keys)
+        ```
