@@ -180,3 +180,31 @@
   result = incrementByTen()
   print(result) // 60
   ```
+
+## Escaping Closures
+
+- A closure that is passed to a function that is executed after the function it was passed to finish executing
+- Marked with the `@escaping` keyword before the parameter's type
+- Escaping closures outlive the function they are defined in
+  - By default, closures are non-escaping, which means they are closures that are used within the function
+- Example:
+
+  ```swift
+  func someFunc(closure: @escaping () -> Void) {
+    print("1. Function starts")
+
+    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+      closure() // Runs 2 seconds later
+    }
+
+    print("2. Function ends (closure hasn't run yet)")
+  }
+
+  someFunc { print("3. Closure runs 2 seconds later") }
+  print("4. After someFunc finishes")
+
+  // 1. Function starts
+  // 2. Function ends (closure hasn't run yet)
+  // 4. After someFunc finishes
+  // 3. Closure runs 2 seconds later
+  ```

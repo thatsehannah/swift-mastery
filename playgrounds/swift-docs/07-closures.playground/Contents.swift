@@ -65,5 +65,19 @@ let strings = nums.map { (num) -> String in
 print(strings)
 print("---------------------")
 
+// ----------------Escaping Closures----------------
+func someFunc(closure: @escaping () -> Void) {
+    print("1. Function starts")
+
+    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+        closure() // Runs 2 seconds later
+    }
+
+    print("2. Function ends (closure hasn't run yet)")
+}
+
+someFunc { print("3. Closure runs 2 seconds later") }
+print("4. After someFunc finishes")
+
 
 
