@@ -187,6 +187,7 @@
 - Marked with the `@escaping` keyword before the parameter's type
 - Escaping closures outlive the function they are defined in
   - By default, closures are non-escaping, which means they are closures that are used within the function
+- Lifecycle: The function starts -> The closure is saved somewhere (e.g. variable or an async queue) -> The function finishes and returns -> time passes -> the closue executes
 - Example:
 
   ```swift
@@ -208,3 +209,5 @@
   // 4. After someFunc finishes
   // 3. Closure runs 2 seconds later
   ```
+
+- When a function starts an asynchronous task (e.g. network request or a timer) and returns immediately, this function will have a completion handler (escaping closure) that will be executed later when the async task finishes
