@@ -1,6 +1,5 @@
 import Cocoa
 
-
 // -----------------------ARRAYS-----------------------
 var list = ["LeBron", "Jordan", "Kobe", "Wade"]
 
@@ -49,3 +48,4 @@ print(disjoint)
 
 var disjoint2 = setB.isDisjoint(with: setA)
 print(disjoint2)
+

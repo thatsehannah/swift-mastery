@@ -1,4 +1,4 @@
-import UIKit
+import Cocoa
 
 // ------------If Expression------------
 let temp = 90

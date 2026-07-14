@@ -28,3 +28,4 @@ let greeting2 = "Hello, World!"
 let index = greeting2.firstIndex(of: ",") ?? greeting.endIndex
 let beginning = greeting2[..<index]
 print(beginning)
+

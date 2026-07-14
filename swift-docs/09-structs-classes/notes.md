@@ -88,6 +88,7 @@
     - Provides a getter `get` but no setter
     - Returns a value based on other stored properties
     - Cannot be assigned a new value
+    - Useful for deriving a new value from existing stored properties
     - Example:
 
       ```swift
@@ -110,7 +111,7 @@
 
       - In this example, the `get` and `return` keywords can be omitted for simplification
 
-  - **Read-write Computed Properties**
+  - **Read-write computed properties**
     - Includes both a getter `get` and a setter `set`
     - Setter allows you to update stored properties (those involved with the getter) indirectly
       - Setter provides an implicit parameter `newValue` that represents the new value to be set
@@ -138,3 +139,37 @@
       box.area = 25.0
       print(box.side) // 5.0
       ```
+
+## Property Observers
+
+- Observe and respond to changes in a property's value
+- Called every time a property's value is set
+- Added to stored properties that are defined in a struct/class, stored properties that are inherited, and computed properties that are inherited
+  - For inherited properties, add a property observer by overriding that property in the subclass
+  - For computed properties, use the setter `set`
+- `willSet` - called before the value is stored
+  - Passed the new value that you can specify a name for or use the default name `newValue` parameter name
+- `didSet` - called after the new value is stored
+  - Passed the old value that you can specify a name for or use the default `oldValue` parameter name
+- Example:
+
+  ```swift
+  class StepCounter {
+    var totalSteps: Int = 0 {
+      willSet(moreSteps) {
+        print("About to add \(newTotalSteps) steps"
+      }
+      didSet {
+        if (totalSteps > oldValue) {
+          print("Added \(totalSteps - oldValue) steps")
+        }
+      }
+    }
+  }
+
+  let stepCounter = StepCounter()
+  stepCounter.totalSteps = 200 // About to add 200 steps; Added 200 steps
+  stepCounter.totalSteps = 360 // About to add 360 steps; Added 160 steps
+  stepCounter.totalSteps = 250 // About to add 250 steps
+  stepCounter.totalSteps = 261 // About to add 261 steps; Added 11 steps
+  ```

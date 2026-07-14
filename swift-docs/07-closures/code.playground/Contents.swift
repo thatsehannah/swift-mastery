@@ -1,4 +1,4 @@
-import UIKit
+import Cocoa
 
 // ----------------Capturing Variables----------------
 var count = 0
@@ -78,6 +78,3 @@ func someFunc(closure: @escaping () -> Void) {
 
 someFunc { print("3. Closure runs 2 seconds later") }
 print("4. After someFunc finishes")
-
-
-

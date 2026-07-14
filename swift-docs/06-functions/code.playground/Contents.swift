@@ -1,4 +1,4 @@
-import UIKit
+import Cocoa
 
 // ---------------Returning a tuple---------------
 func firstAndLast(array: [Int]) -> (first: Int, last: Int) {
@@ -81,4 +81,3 @@ print("modified array (add): \(newArray)")
 modifyArray = chooseArrayFunction(add: false)
 newArray = modifyArray(array, array.count - 1)
 print("modified array (remove): \(newArray)")
-

@@ -1,4 +1,4 @@
-import UIKit
+import Cocoa
 
 // --------------Creating an enum--------------
 enum CompassPoint {
@@ -44,3 +44,4 @@ print(Planet.venus.rawValue)
 print(Planet.mars.rawValue)
 
 let planet = Planet(rawValue: 5)
+
