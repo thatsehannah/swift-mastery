@@ -173,3 +173,108 @@
   stepCounter.totalSteps = 250 // About to add 250 steps
   stepCounter.totalSteps = 261 // About to add 261 steps; Added 11 steps
   ```
+
+## Property Wrappers
+
+- Adds a layer of separation between code that manages how a property is stored and the code that defines a property
+- Encapsulates management logic (e.g. data validation, persistence) into a reusable object so you don't have to rewrite custom getters and setters across multiple properties
+  - The management code is written once and then reused by applying it to multiple properties
+- `@propertyWrapper` - attribute used when creating a property wrapper on a struct, class, or enum
+  - Has to define a `wrappedValue` stored or computed property
+    - Defines the underlying value being managed
+- Apply a wrapper to a property of a struct, class, or enum by writing the wrapper's name before the property as an attribute
+- Example:
+
+  ```swift
+  @propertyWrapper
+  struct Uppercased {
+    private var name: String = ""
+    var wrappedValue: Int {
+      get { return name }
+      set { name = newValue.uppercased() }
+    }
+  }
+
+  struct User {
+    @Uppercased var firstName: String
+    @Uppercased var lastName: String
+  }
+
+  var user = User()
+  user.firstName = "elliot"
+  print(user.firstName) // ELLIOT
+  ```
+
+## Type Properties
+
+- Properties that belong to a type, not to any one instance of that type
+- Only one copy of the properties, no matter the amount of instances of that type created
+- Universal to all instances of a particular type
+- Similar to `static` variables in other languages
+- Must have a default value because there's no way for a type to assign a value at initialization time
+- Written as part of the type's definition using the `static` keyword
+  - For computed properties of class types, use the `class` keyword (instead of `static`) to make the property overrideable
+- Values are set and accessed via dot syntax on the type
+- Example:
+
+  ```swift
+  struct SomeStruct {
+    static var storedProp = "Some Value"
+
+  }
+
+  print(SomeStruct.storedProp)
+
+
+  ```
+
+## Methods
+
+- Functions associated with a particular type
+- **Instance methods** - functions that belong to instances of a particular that provide functionality that either access and modify instance properties, or provide functionality related to the instance's purpose
+- **Type methods** - functions that are called on the type itself
+  - Indicated by the `static` keyword before the method's `func` keyword
+  - Can call another type method or access type properties within the method's definition without using prefixing the type's name
+  - For class types, use the `class` keyword instead of `static`
+- `mutating` - keyword used on instance methods that allow you to modify the properties of a struct within the method itself
+  - Structs are value types and their properties can't be modified from within its methods
+  - Example:
+
+    ```swift
+    struct Point {
+      var x = 0.0., y = 0.0
+      mutating func moveBy(x deltaX: Double, y deltaY: Double) {
+        x += deltaX
+        y += deltaY
+      }
+    }
+
+    var somePoint = Point(x: 1.0, y: 2.0)
+    somePoint.moveBy(x: 4.0, y: 3.0)
+
+    print("x: \(somePoint.x), y: \(somePoint.y)")
+    ```
+
+## `self` Property
+
+- Implicit property every instance has that is equivalent to the instance itself
+- Use this property to refer to the current instance within its own instance methods
+- If `self` isn't written explicitly, Swift automatically assumes you're referring to property or method of the current instance anyway
+  - When a parameter in an instance method has the same name as a property of that instance, use the `self` property to distinguish between the parameter and property
+    - Example:
+
+      ```swift
+      struct Point {
+        var x = 0.0, y = 0.0
+        func isToTheRightOf(x: Double) -> Bool {
+          return self.x > x
+        }
+      }
+
+      let somePoint = Point(x: 5.0, y: 5.0)
+      if (somePoint.isToTheRightOf(x: 3.0)) {
+        print("True")
+      } else {
+        print("False")
+      }
+      ```
