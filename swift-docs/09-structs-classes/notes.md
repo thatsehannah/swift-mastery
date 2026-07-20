@@ -278,3 +278,108 @@
         print("False")
       }
       ```
+
+## Subscripts
+
+- Used to set and retrieve values by index without needing separate methods
+- Allow you to query instances of a type by writing one or more values in square brackets after the instance name
+- Syntax (similar to instance methods)
+  - `subscript` keyword
+  - One or more input parameters
+  - Return type
+  - Can be either read-write (getter & setter) or read-only (getter) like a computed property
+  - Example:
+
+    ```swift
+    struct Person {
+      var name: String
+      var age: Int
+
+      subscript(key: String) -> String? {
+        get {
+          if key == "name" { return name }
+          if key == "age" { return age }
+          return nil
+        }
+      }
+    }
+
+    let person = Person(name: "Elliot", age: 32)
+    print(person["name"]) // Elliot
+    print(person["age"]) // 32
+    ```
+
+- Let you access data using familiar bracket notation instead of method calls
+  - Example (without subscripts):
+
+    ```swift
+    class PhoneBook {
+      private var data: [String: String] = [:]
+      func getNumber(forContact key: String) -> String? {
+        return data[key]
+      }
+
+      func setNewNumber(_ value: String, name key: String) {
+        data[key] = value
+      }
+    }
+
+    let phoneBook = PhoneBook()
+    phoneBook.setNewNumber("2135557415", name: "Ghost")
+    let number = phoneBook.getNumber(forContact: "Ghost")
+    ```
+
+  - Example (with subscripts):
+
+    ```swift
+    class PhoneBook {
+      private var data: [String: String] = [:]
+
+      subscript(key: String) -> String? {
+        get { return data[key] }
+        set(newNumber) { data[key] = newNumber }
+      }
+    }
+
+    let phoneBook = PhoneBook()
+    phoneBook["Ghost"] = "2135557415"
+    let number = phoneBook["Ghost"]
+    ```
+
+- **Subscript overloading** - Classes and structs can implement as many subscripts as needed, inferred based on the type and values provided at the point the subscript is used
+
+## Inheritance
+
+- When a class inherits methods, properties, etc. from another class and provides their own implementation to those characteristics to refine the behavior as well as add their own methods, properties, etc.
+- **Subclass** - The class that inherits from another class
+- **Superclass** - The class that a subclass inherits from
+- **Base class** - Class that doesn't inherit from another class
+  - Classes defined without specifying a superclass automatically become a base class
+- When defining a new class, write the subclass before the superclass, separated by a colon
+
+  ```swift
+  class Subclass: Superclass {
+    // definition
+  }
+  ```
+
+- Example:
+
+  ```swift
+  class Vehicle {
+    var currentSpeed: Double = 0.0
+    var description: String {
+      return "traveling at \(currentSpeed) mph"
+    }
+  }
+
+  class Bicycle: Vehicle {
+    var hasBasket = false
+  }
+
+  let bike = Bicycle()
+  bike.currentSpeed = 15.0
+  bike.hasBasket = true
+  print(bike.description)
+
+  ```

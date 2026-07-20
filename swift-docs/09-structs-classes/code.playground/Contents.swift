@@ -138,3 +138,20 @@ if somePoint.isToTheRightOf(x: 2.0) {
 } else {
     print("False")
 }
+
+// -------------Inheritance-------------
+class Vehicle {
+    var currentSpeed: Double = 0.0
+    var description: String {
+        return "traveling at \(currentSpeed) mph"
+    }
+}
+
+class Bicycle: Vehicle {
+    var hasBasket: Bool = false
+}
+
+let bike = Bicycle()
+bike.hasBasket = true
+bike.currentSpeed = 15.0
+print(bike.description)
