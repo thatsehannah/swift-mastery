@@ -383,3 +383,15 @@
   print(bike.description)
 
   ```
+
+## Overriding
+
+- When a subclass provides its own implementation of a property, method, or subscript
+  inherited from a superclass
+- Prefix the element with the `override` keyword
+  - Example: `override var currentSpeed: Double {}`
+- Inherited stored or computed properites can be overriden, as well as inherited instance or type methods
+  - For inherited properties, they can be provided custom getters and setters regardless if its a stored or computed property
+- Can't add property observers to inherited stored properties or read-only computed properties
+- To prevent something from being overriden, write the `final` keyword before the method, property, or subscript
+  - Example: `final func doSomething() {}`
