@@ -22,15 +22,15 @@
 
   ```swift
   struct Resolution {
-      var width = 0
-      var height = 0
-    }
+    var width = 0
+    var height = 0
+  }
 
-    class VideoMode {
-      var resolution = Resolution()
-      var frameRate = 0.0
-      var name: String?
-    }
+  class VideoMode {
+    var resolution = Resolution()
+    var frameRate = 0.0
+    var name: String?
+  }
   ```
 
 ## Creating Instances
@@ -53,7 +53,7 @@
     ```swift
     let vga = Resolution(width: 800, height: 900)
     ```
-  - Class do not have memberwise initializers
+  - Classes do not have memberwise initializers
 
 ## Value & Reference Types
 
@@ -395,3 +395,59 @@
 - Can't add property observers to inherited stored properties or read-only computed properties
 - To prevent something from being overriden, write the `final` keyword before the method, property, or subscript
   - Example: `final func doSomething() {}`
+
+## Initialization
+
+- The process of perparing an instance of a class, struct, or enum for creating a new instance
+- Involves setting initial values for properties or performing any required setup for the new instance
+- Classes and structs must set all of their stored properties to an initial value by the time an instance is created
+- **Initializer** - a method that is called to create a new instance of a particular type
+  - Written using the `init` keyword
+  - Can take parameters as part of the initializer definition to define the types and names of values to create a specific instance
+    - Can have both a parameter name and argument label. If no argument label is provided, an automatic argument label will be given
+      - Argument labels must be used in an initializer if provided
+      - To override the automatic argument label, write an underscore `_` in place of the argument label when defining the initializer parameter
+    - There can be multiple initializers within a class, struct, or enum, differentiated by their parameter definitions
+  - Example:
+
+    ```swift
+    struct Color {
+      let red, green, blue: Double
+      init(red: Double, green: Double, blue: Double) {
+        self.red = red
+        self.green = green
+        self.blue = blue
+      }
+
+      init(white: Double) {
+        red = white
+        green = white
+        blue = white
+      }
+
+      init(_ black: Double) {
+        red = black
+        green = black
+        blue = black
+      }
+    }
+
+    let magenta = Color(red: 1.0, green: 0.0, blue: 1.0)
+    let black = Color(0.0)
+    ```
+
+- **Default initializers** - An initializer that is used to create a new instance with all of its properties set to their default values
+  - Structs have _memberwise initializers_ that act as default initializers, but the stored properties do not have to have default values
+    - If some stored properties do have default values, they can be omitted when calling a memberwise initializer
+- **Designated initializers** - Fully initializes all properties of a class as well as call the superclass initializer
+  - Every class must have at least one, either their own custom initializer(s) or some inherited from a superclass
+  - Must call a designated initializer from its superclass
+- **Convenience initializers** - Supporting initializer that can call a default initializer within the same class, or can create an instance for a specific use case
+  - Used whenever to create a shortcut for creating an instance
+  - `convenience` keyword before the `init` keyword
+  - Must call another initializer from the same class & must call a designated initializer
+- **Two Phase Initialization** - Prevents property values from being accessed before they're given values
+  - **_First phase_**: each stored property is assigned a default value
+    - A designated or convenience initializer is called
+    - The designated initializer makes sure that all stored properties have values and triggers the superclass initializer to repeat the same process all the way until the base class is reached
+  - **_Second phase_**: the class is allowed to customize the stored properties more before a new instance is ready
