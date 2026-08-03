@@ -54,3 +54,25 @@ var lightSwitch = OnOffSwitch.off
 print(lightSwitch)
 lightSwitch.toggle()
 print(lightSwitch)
+
+// -------------------Protocol Composition-------------------
+protocol Named {
+    var name: String { get }
+}
+
+protocol Aged {
+    var age: Int { get }
+}
+
+struct BirthdayPerson: Named, Aged {
+    let name: String
+    let age: Int
+}
+
+func wishHappyBirthday(to celebrator: Named & Aged) {
+    print("Happy birthday \(celebrator.name)! You're \(celebrator.age) years old.")
+}
+
+let birthdayPerson = BirthdayPerson(name: "Henry", age: 24)
+
+wishHappyBirthday(to: birthdayPerson)

@@ -26,10 +26,17 @@
         // definition
       }
       ```
-- Protocols specify the name and type of a property and whether the property is gettable or gettable AND settable
-  - Property requirements are always variables `var`
-  - Gettable and settable properties have `{ get set }` after their type definition
-  - Gettable properties have `{ get }` after their type definition
+  - To limit a protocol to only be conformed by class types, add the `AnyObject` protocol to its inheritance list
+    - Example:
+      ```swift
+      protocol SomeClassOnlyProtocol: AnyObject, SomeProtocol {
+        // definition
+      }
+      ```
+- Protocols specify the name and type of a property and whether the property is readable or readable AND writable
+  - <mark>Property requirements are always variables `var`</mark>
+  - Readable and writable properties have `{ get set }` after their type definition
+  - Readable properties have `{ get }` after their type definition
   - Example:
 
     ```swift
@@ -75,7 +82,22 @@
       ```
 
 - Can require initializers to be implemented by conforming types the same way as methods
-  - For classes that conform to a protocol that requires an initializer, the required initializer is either a designate or convenience initializer, prefixed with the `required` keyword
+  - For classes that conform to a protocol that requires an initializer, the required initializer is either a designated or convenience initializer, prefixed with the `required` keyword
+  - Example:
+
+    ```swift
+    protocol Shape {
+      init(color: String)
+    }
+
+    class Rectangle: Shape {
+      var color: String
+
+      required init(color: String) {
+        self.color = color
+      }
+    }
+    ```
 
 ## Semantic Requirements
 
@@ -88,5 +110,38 @@
         let fileName: String
       }
       ```
-- Examples:
-  - **Copyable** for values that are copied when passed to a function
+
+## Protocol Composition
+
+- When a type conforms to multiple protocols at once by combining them into a single requirement for things like typing function parameters or typing a property
+- Protocols are separated by an ampersand `&`
+- Behave as a local protocol that combines all of the requirements of the protocols
+- Example
+
+  ```swift
+  protocol Named {
+    var name: String { get }
+  }
+
+  protocol Aged {
+    var age: Int { get }
+  }
+
+  struct Person: Named, Aged {
+    let name: String
+    let age: Int
+  }
+
+  func wishHappyBirthday(to celebrator: Named & Aged) {
+    print("Happy birthday \(celebrator.name). You're \(celebrator.age) years old.")
+  }
+
+  let birthdayPerson = Person(name: "Henry", age: 24)
+
+  wishHappyBirthday(to: birthdayPerson)
+  // Happy birthday Henry. You're 24 years old.
+  ```
+
+  - In the `wishHappyBirthday` function, it doesn't matter which specific type is passed, just as long as it conforms to the required protocols
+
+- <mark>When using multiple protocols to define a type (struct, class, enum), use the conformance approach (separating by commas). When using multiple protocols as a specific type (method params, return type, variable type), use the composition approach (separating by ampersands)</mark>
