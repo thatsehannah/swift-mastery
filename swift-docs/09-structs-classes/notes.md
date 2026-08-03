@@ -438,6 +438,8 @@
 
 - **Default initializers** - An initializer that is used to create a new instance with all of its properties set to their default values
   - Structs have _memberwise initializers_ that act as default initializers, but the stored properties do not have to have default values
+    - If a struct has a custom initializer defined, the memberwise initializer is disabled automatically
+      - Defining the custom initializer in an **extension** keeps both the memberwise initializer and custom initializer
     - If some stored properties do have default values, they can be omitted when calling a memberwise initializer
 - **Designated initializers** - Fully initializes all properties of a class as well as call the superclass initializer
   - Every class must have at least one, either their own custom initializer(s) or some inherited from a superclass
